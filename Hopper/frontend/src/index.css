@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.message-animate {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+a {
+  font-weight: 600;
+  color: #0042d1;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2.5px;
+}
+
+@theme {
+  --background-glass: rgba(255, 255, 255, 0.7);
+  --background-glass-dark: rgba(15, 23, 42, 0.7);
+}
+
+.glass {
+  background: var(--background-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass {
+  background: var(--background-glass-dark);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Fix for list rendering */
+ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+li::marker {
+  color: currentColor;
+  opacity: 0.8;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}

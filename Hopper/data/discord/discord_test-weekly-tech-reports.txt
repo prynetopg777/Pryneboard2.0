@@ -1,0 +1,24 @@
+Server: Hopper Testing Server | Channel: #test-weekly-tech-reports | Report-Type: WEEKLY | Period: 2026-05-12
+[2026-05-12] minaryu:
+**tech-team Weekly Report**
+**Period: February 9 - 13, 2026**
+This week, the team focused on UI improvements, system enhancements, client deliverables, and deployment-related activities across multiple projects including TARA, KingPanda, Alphera, RCBC, and Synctalents. Work was distributed across design, development, integrations, and client coordination to ensure steady progress on both internal builds and external deliverables.
+**Alice** concentrated on sales page design and TARA app assets. She handled QA and UI adjustments for the Springboard sales page, designed the Synctalents EOR and Global Contractor pages, and coordinated closely with Bob and Charlie for UI changes and asset preparation. She also added new desktop screens to the TARA app and began preparing store submission assets.
+**Bob** worked across TARA, Alphera, KingPanda, and HKM. For TARA, he started Google Play provisioning, helped prepare the privacy policy and account deletion pages, and explored converting the website into a mobile app. In Alphera, he handled client concerns, fixed assessor approval issues, enhanced reports, and added filtering and workflow updates. For KingPanda, he led major UI improvements including brand pages, listing redesign, seller info drawers, inquiry flows, and a new inquiries management page. He also deployed a new cutoff update for HKM.
+**Charlie** completed the RCBC deployment, which is now under UAT by the client's IT team. He also conducted backlog refinement in preparation for the next sprint, focusing on Counterparty Management features. Integration of the Create CIF – Corporate function was completed, while workflow actions and edit functionality are ongoing and dependent on backend progress.
+
+---
+
+Server: Hopper Testing Server | Channel: #test-weekly-tech-reports | Report-Type: WEEKLY | Period: 2026-05-12
+[2026-05-12] hasuraku:
+**tech-team Weekly Report**
+**Period: February 16 - 20, 2026**
+**Dave** finalized core implementations for the Breighton system, including bug fixes and export functionalities, and is now polishing the overall experience. For the Google Workspace (Ingram) project, he continued coordination and troubleshooting to resolve resell opportunity access and data inconsistencies.
+**Eve** delivered extensive improvements to the KingPanda listing flow, profile system, and CMS, including validation updates, performance optimizations, image handling fixes, role-based features, and UI refinements. She also advanced the TARA app with clickable product cards, flight data integration, profile management, Google SSO, and internal testing builds for the mobile app.
+**Frank** supported the RCBC project by attending standups, assisting with SIT debugging, implementing backend integration for Individual CIF, and collaborating on API fixes. He also worked with Bob to implement and test the new cutoff logic for HKM.
+**Grace** completed onboarding across multiple Shopify projects, reviewed configurations and API requirements, and identified sections needing updates. She also designed the Synctalents EOR page header and completed the page layout, with link implementations pending.
+**Henry** handled project onboarding and coordination across Shopify initiatives, reviewed active and pending tasks, oriented Grace on headless Shopify setups, added her to project communication channels, and assigned her to the ERPNext Springboard and Synctalents EOR pages.
+Overall, the team delivered key UI updates, completed major feature implementations, advanced mobile deployment efforts, and supported ongoing client integrations and UAT processes across several active projects.
+
+---
+
