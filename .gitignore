@@ -1,0 +1,31 @@
+# Ignore node_modules
+**/node_modules/
+
+# Ignore Python virtual environments
+**/venv/
+**/.venv/
+**/.pytest_cache/
+**/__pycache__/
+
+# Ignore IDE settings
+.vscode/
+.idea/
+
+# Ignore sensitive files (keep .env local)
+.env
+.env.*
+!.env.example
+
+# Ignore build artifacts
+dist/
+build/
+*.pyc
+*.pyo
+
+# Ignore local database files
+*.db
+*.sqlite
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
