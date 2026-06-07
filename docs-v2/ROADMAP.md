@@ -11,13 +11,15 @@
 **Goal:** Implement advanced retrieval and agent capabilities.
 - [x] Port Hopper's two-stage retrieval (Vector + Reranking) to Python.
 - [x] Add support for local reranking models (Cross-Encoders) via the Cookbook.
-- [ ] Integrate MCP (Model Context Protocol) as the primary tool extension mechanism.
+- [x] Integrate MCP (Model Context Protocol) as the primary tool extension mechanism.
 - [ ] Enhance Agent Loop with "Namespace Awareness" (agents can intelligently switch contexts).
 
 ## Phase 3: Experience (The Modern Workspace)
 **Goal:** Launch the new React/Tailwind frontend.
 - [ ] Implement new "Workspace" UI with multi-window support (Chat, Editor, Gallery).
-- [ ] Stream AI responses as HTML with Tailwind styling (Hopper style).
+- [x] Stream AI responses as HTML with Tailwind styling (Hopper style).
+- [x] Implement specialized document processing (CSV tables, PDF metadata).
+- [x] Add YouTube Analysis tool (Transcripts + Comments via yt-dlp).
 - [ ] Build the "Knowledge Dashboard" for managing namespaces and ingestion logs.
 - [ ] Implement "Visual Citations" (thumbnails/links for sources).
 

@@ -32,16 +32,18 @@ graph TD
 - `middleware.py`: Security and logging layers.
 
 ### Business Logic (`odysseus-SIDE-/src/`)
-- `ai_interaction.py`: Core chat and LLM interfacing.
+- `ai_interaction.py`: Core chat and LLM interfacing (Strict Grounding Rules).
 - `agent_loop.py`: Task management and tool execution.
-- `document_processor.py`: File parsing and text normalization.
+- `document_processor.py`: File parsing (CSV Tables, PDF Metadata).
 - `rag_vector.py`: ChromaDB storage and retrieval.
 - `deep_research.py`: High-level reporting logic.
+- `tool_implementations.py`: Native tool logic (YouTube Analysis).
 
-### RAG Specialization (`Hopper/`)
-- `backend/discord_bot_starter/hopper_harvest.py`: Discord ingestion.
-- `backend/src/core/retriever.ts`: Two-stage retrieval logic (Target for Python port).
-- `backend/src/core/documentProcessor.ts`: Semantic deduplication (Target for Python port).
+### MCP Servers (`odysseus-SIDE-/mcp_servers/`)
+- `rag_server.py`: RAG document management.
+- `youtube_server.py`: YouTube transcript and comment extraction.
+- `email_server.py`: IMAP/SMTP integration.
+- `memory_server.py`: Semantic memory management.
 
 ---
 

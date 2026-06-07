@@ -54,11 +54,13 @@ The "Company Brain" transforms raw episodic memory into declarative organization
 *   **Feature:** Managed Discord Harvester & Metadata Scoping.
 *   **Focus:** Integrate `hopper_harvest.py` into `src/integrations/`. Implement `POST /api/ingest/discord`.
 *   **Status:** **COMPLETE** (Logic migrated to Python, API triggered, RAG integrated).
-
 ### Phase 3: Generation & Output (Weeks 7-8)
 *   **Feature:** Grounded Generation (HTML-First) & Citations.
 *   **Focus:** Implement strict grounding in `ai_interaction.py` and render the "Sources:" section in `app.js`.
+*   **Status:** **IN PROGRESS** (Strict grounding, HTML-first output, and Source mandates implemented in `ai_interaction.py`).
+*   **Added Value:** Specialized CSV-to-Markdown processing, PDF metadata extraction, and comprehensive YouTube Analysis tool (transcript + comments).
 *   **Acceptance:** AI refuses to answer out-of-scope questions; every answer includes clickable local citations.
+
 
 ---
 

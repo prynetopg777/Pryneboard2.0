@@ -119,12 +119,64 @@ def _process_text_file(path: str) -> str:
         return result
 
 
+def _process_csv_file(path: str) -> str:
+    """Process CSV file and format it as a markdown table."""
+    import csv
+    from io import StringIO
+    
+    filename = os.path.basename(path)
+    try:
+        with open(path, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read()
+        
+        # Limit processing to first 50 rows to avoid blowing context
+        f_io = StringIO(content)
+        reader = csv.reader(f_io)
+        rows = list(reader)
+        
+        if not rows:
+            return f"\n=== File: {filename} ===\n[Empty CSV file]"
+            
+        truncated = len(rows) > 50
+        display_rows = rows[:50]
+        
+        # Build markdown table
+        if len(display_rows) > 0:
+            cols = len(display_rows[0])
+            header = "| " + " | ".join(display_rows[0]) + " |"
+            separator = "| " + " | ".join(["---"] * cols) + " |"
+            body = "\n".join(["| " + " | ".join(row) + " |" for row in display_rows[1:]])
+            
+            table = f"{header}\n{separator}\n{body}"
+            if truncated:
+                table += f"\n\n[Truncated: showing first 50 of {len(rows)} rows]"
+            
+            return f"\n=== File: {filename} ===\n[Type: csv, Rows: {len(rows)}]\n\n{table}"
+            
+    except Exception as e:
+        logger.warning(f"Failed to process CSV {filename}: {e}")
+        return _process_text_file(path) # Fallback to raw text
+
 def _process_pdf(path: str) -> str:
     """Process PDF file with text extraction (pypdf). Uses VL model for image-heavy pages."""
     try:
         from pypdf import PdfReader
         pdf_text = ""
         reader = PdfReader(path)
+        
+        # Extract metadata
+        meta = reader.metadata or {}
+        title = meta.get("/Title")
+        author = meta.get("/Author")
+        subject = meta.get("/Subject")
+        
+        metadata_header = ""
+        if title: metadata_header += f"Title: {title}\n"
+        if author: metadata_header += f"Author: {author}\n"
+        if subject: metadata_header += f"Subject: {subject}\n"
+        
+        if metadata_header:
+            pdf_text += f"[Metadata]:\n{metadata_header}\n"
 
         for page_num, page in enumerate(reader.pages):
             page_text = (page.extract_text() or "").strip()
@@ -164,6 +216,7 @@ def _process_pdf(path: str) -> str:
 
     except Exception as e:
         return f"\n\n[PDF processing failed: {str(e)}]"
+
 
 
 def _truncate_inline(text: str, limit: int = 15000) -> tuple[str, str]:
@@ -529,7 +582,10 @@ def build_user_content(
                 if extracted_text is None:
                     extracted_text = _process_pdf(path)
             elif mime.startswith("text/") or _is_text_file(path):
-                extracted_text = _process_text_file(path)
+                if ext == ".csv":
+                    extracted_text = _process_csv_file(path)
+                else:
+                    extracted_text = _process_text_file(path)
             else:
                 extracted_text = _process_office_document(path, display_name)
 

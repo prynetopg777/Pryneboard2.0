@@ -223,13 +223,18 @@ class UploadHandler:
         dangerous_types = {
             'application/x-executable', 'application/x-sharedlib',
             'application/x-dll', 'application/x-msdownload',
+            'application/x-dosexec', 'application/x-msi',
             'application/x-sh', 'application/x-bat', 'application/x-vbs',
-            'application/javascript', 'application/x-javascript'
+            'application/javascript', 'application/x-javascript',
+            'application/x-php', 'application/x-python', 'application/x-ruby',
         }
         
         dangerous_extensions = {
-            '.exe', '.dll', '.bat', '.cmd', '.vbs', 
-            '.ps1', '.jsp', '.asp', '.aspx'
+            '.exe', '.dll', '.bat', '.cmd', '.vbs', '.vbe', '.js', '.jse',
+            '.ws', '.wsf', '.wsh', '.msc', '.msi', '.msp', '.com', '.pif',
+            '.scr', '.ps1', '.ps1xml', '.ps2', '.ps2xml', '.psc1', '.psc2',
+            '.jar', '.py', '.pyw', '.pyc', '.pyo', '.sh', '.bash', '.php', '.php3', '.php4', '.phtml',
+            '.asp', '.aspx', '.jsp', '.jspx', '.cfm', '.cfml', '.pl', '.cgi',
         }
         
         if content_type in dangerous_types:
@@ -237,6 +242,11 @@ class UploadHandler:
         
         _, ext = os.path.splitext(filename.lower())
         if ext in dangerous_extensions:
+            # For documents, we allow some text-based script extensions if they are identified as text/plain
+            # but we are extra careful with executable ones.
+            safe_text_extensions = {'.py', '.js', '.sh', '.bash', '.sql', '.php', '.rb', '.ts'}
+            if ext in safe_text_extensions and content_type.startswith('text/'):
+                return True
             return False
         
         return True

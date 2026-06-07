@@ -18,6 +18,7 @@ numpy
 chromadb-client
 fastembed
 youtube-transcript-api
+yt-dlp
 # Markdown rendering for research reports (src/visual_report.py).
 # Imported at module-top so it's a hard core dep, not optional.
 markdown

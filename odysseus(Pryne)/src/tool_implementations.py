@@ -547,7 +547,58 @@ async def do_suggest_document(content: str, doc_id: str = None, owner: Optional[
 # Search chats
 # ---------------------------------------------------------------------------
 
-async def do_search_chats(query: str, limit: int = 20, owner: str | None = None) -> Dict:
+async def do_analyze_youtube(content: str, owner: Optional[str] = None) -> Dict:
+    """Analyze a YouTube video: extract transcript, fetch comments, and provide a structured summary."""
+    try:
+        args = _parse_tool_args(content)
+    except ValueError:
+        # Fallback to assuming the content is just the URL
+        args = {"url": content.strip()}
+
+    url = args.get("url", "").strip()
+    if not url:
+        return {"error": "YouTube URL is required", "exit_code": 1}
+
+    from services.youtube.youtube_handler import (
+        is_youtube_url, extract_youtube_id, extract_transcript_async,
+        fetch_youtube_comments, format_transcript_for_context, format_comments_for_context,
+        YOUTUBE_INSTRUCTION_PROMPT
+    )
+
+    if not is_youtube_url(url):
+        return {"error": f"Invalid YouTube URL: {url}", "exit_code": 1}
+
+    video_id = extract_youtube_id(url)
+    if not video_id:
+        return {"error": f"Could not extract video ID from URL: {url}", "exit_code": 1}
+
+    # Fetch transcript and comments in parallel
+    transcript_task = extract_transcript_async(url, video_id)
+    comments_task = fetch_youtube_comments(video_id)
+    
+    transcript_data, comments_data = await asyncio.gather(
+        transcript_task, comments_task
+    )
+
+    title = comments_data.get("title", "")
+    channel = comments_data.get("channel", "")
+
+    transcript_ctx = format_transcript_for_context(transcript_data, url, title, channel)
+    comments_ctx = format_comments_for_context(comments_data, url)
+
+    full_context = f"{YOUTUBE_INSTRUCTION_PROMPT}\n\n{transcript_ctx}\n\n{comments_ctx}"
+
+    return {
+        "response": f"Successfully retrieved data for YouTube video: {title or video_id}",
+        "video_id": video_id,
+        "title": title,
+        "channel": channel,
+        "transcript_available": transcript_data.get("success", False),
+        "comments_available": comments_data.get("success", False),
+        "context_for_llm": full_context,
+        "exit_code": 0
+    }
+
     """Search past chat messages for the calling user's sessions only.
 
     Without an owner filter this used to leak EVERY user's chat history

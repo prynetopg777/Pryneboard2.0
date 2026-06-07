@@ -21,6 +21,18 @@ MAX_DEBATE_ROUNDS = 5
 MAX_PIPELINE_STEPS = 10
 
 # ---------------------------------------------------------------------------
+# Grounding Rules
+# ---------------------------------------------------------------------------
+
+STRICT_GROUNDING_RULES = (
+    "\n\n[GROUNDING RULES]\n"
+    "1. Output responses in semantic HTML (e.g., <strong>, <ul>, <p>) with Tailwind classes for formatting.\n"
+    "2. If providing information from a specific source, cite it clearly.\n"
+    "3. Every response MUST end with a 'Sources:' section (even if it says 'No specific sources cited').\n"
+    "4. Be concise and practical. No preamble.\n"
+)
+
+# ---------------------------------------------------------------------------
 # Global managers (set from app.py, same pattern as _mcp_manager)
 # ---------------------------------------------------------------------------
 _session_manager = None
@@ -170,7 +182,10 @@ async def do_chat_with_model(content: str, session_id: Optional[str] = None, own
     try:
         response = await llm_call_async(
             url, model,
-            [{"role": "user", "content": message}],
+            [
+                {"role": "system", "content": STRICT_GROUNDING_RULES},
+                {"role": "user", "content": message}
+            ],
             headers=headers,
             timeout=AI_CHAT_TIMEOUT,
         )
@@ -189,7 +204,8 @@ _TEACHER_SYSTEM_PROMPT = (
     "1. Brief analysis of the problem\n"
     "2. Recommended approach (step by step)\n"
     "3. Key things to watch out for\n\n"
-    "Be concise and practical. No preamble."
+    "Be concise and practical. No preamble.\n"
+    f"{STRICT_GROUNDING_RULES}"
 )
 
 

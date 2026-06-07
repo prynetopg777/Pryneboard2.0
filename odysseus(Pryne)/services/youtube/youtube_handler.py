@@ -18,14 +18,14 @@ logger = logging.getLogger(__name__)
 # Constants
 # ---------------------------------------------------------------------------
 
-YOUTUBE_INSTRUCTION_PROMPT = """When the user shares a YouTube video, respond with a structured breakdown:
+YOUTUBE_INSTRUCTION_PROMPT = """When the user shares a YouTube video or you analyze one using the tool, provide a high-quality structured breakdown:
 
-1. **Summary** — Concise overview of the video's content and main thesis (2-4 sentences)
-2. **Key Points** — Bullet list of the most important topics, arguments, or moments
-3. **Notable Timestamps** — If timestamps are available from the transcript, highlight 3-5 interesting moments with their approximate timestamps (e.g. "03:45 — discusses X")
-4. **Audience Reception** — If comments are available, summarize what viewers think: general sentiment, top reactions, any debate or controversy
+1. **Video Overview** — Title, Channel, and a concise summary of the core message (2-4 sentences).
+2. **Key Takeaways** — 3-5 bullet points of the most important facts, arguments, or moments.
+3. **Notable Timestamps** — If timestamps are available from the transcript, highlight 3-5 interesting moments (e.g. "03:45 — discusses X").
+4. **Community Sentiment** — Summary of top comments and viewer reactions (if available).
 
-Keep it conversational and concise. Do NOT web search for this video — use only the transcript and comments provided."""
+Keep it conversational, insightful, and professional. Use only the transcript and comments provided — do NOT hallucinate external facts or perform a generic web search."""
 
 # ---------------------------------------------------------------------------
 # Init / helpers

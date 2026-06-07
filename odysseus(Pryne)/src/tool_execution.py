@@ -1272,8 +1272,13 @@ async def execute_tool_block(
     elif tool == "edit_image":
         desc = "edit_image"
         result = await do_edit_image(content, owner=owner)
+    elif tool == "analyze_youtube":
+        desc = "analyze_youtube"
+        from src.tool_implementations import do_analyze_youtube
+        result = await do_analyze_youtube(content, owner=owner)
     elif tool == "edit_file":
         result = await _do_edit_file(content)
+
         desc = result.get("output") or result.get("error") or "edit_file"
     elif tool == "trigger_research":
         desc = "trigger_research"
