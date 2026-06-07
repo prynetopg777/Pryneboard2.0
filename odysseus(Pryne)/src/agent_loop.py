@@ -541,6 +541,7 @@ def _build_system_prompt(
     mcp_disabled_map: Optional[Dict[str, set]] = None,
     compact: bool = False,
     owner: Optional[str] = None,
+    namespace: Optional[str] = None,
 ) -> List[Dict]:
     """Build agent system prompt, inject MCP/document context, merge consecutive system msgs."""
     global _cached_base_prompt, _cached_base_prompt_key
@@ -580,6 +581,11 @@ def _build_system_prompt(
 
     # Dynamic parts that change per request
     mcp_schemas = []
+    
+    # Inject active namespace into system prompt
+    if namespace:
+        agent_prompt.append({"role": "system", "content": f"Current data namespace: '{namespace}'. Scope all searches to this namespace."})
+
     if mcp_mgr:
         mcp_schemas = mcp_mgr.get_all_openai_schemas(mcp_disabled_map or {})
 

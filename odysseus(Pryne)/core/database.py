@@ -101,6 +101,7 @@ class Session(TimestampMixin, Base):
 
     # Organization
     folder = Column(String, nullable=True, default=None)
+    namespace = Column(String, nullable=True, index=True)
     
     # Headers stored as JSON
     headers = Column(JSON, default=dict)
@@ -1586,6 +1587,25 @@ def _migrate_add_content_hash_columns():
         logging.getLogger(__name__).warning(f"content_hash migration failed: {e}")
 
 
+def _migrate_add_session_namespace_column():
+    """Add namespace column to sessions table if it doesn't exist."""
+    import sqlite3
+    db_path = DATABASE_URL.replace("sqlite:///", "")
+    if not os.path.exists(db_path):
+        return
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.execute("PRAGMA table_info(sessions)")
+        columns = [row[1] for row in cursor.fetchall()]
+        if "namespace" not in columns:
+            conn.execute("ALTER TABLE sessions ADD COLUMN namespace TEXT")
+            conn.execute("CREATE INDEX IF NOT EXISTS ix_sessions_namespace ON sessions(namespace)")
+            conn.commit()
+            logging.getLogger(__name__).info("Migrated: added 'namespace' column to sessions")
+        conn.close()
+    except Exception as e:
+        logging.getLogger(__name__).warning(f"Migration check for namespace failed: {e}")
+
 # WARNING: Foreign-key enforcement is enabled globally for all SQLite connections.
 # Any future migrations or schema changes that temporarily violate foreign-key
 # constraints will fail. To perform such operations, foreign_keys must be
@@ -1610,6 +1630,7 @@ def init_db():
     _migrate_add_document_archived_column()
     _migrate_add_last_message_at_column()
     _migrate_add_folder_column()
+    _migrate_add_session_namespace_column()
     _migrate_add_token_columns()
     _migrate_add_mode_column()
     _migrate_add_multiuser_owner_columns()
