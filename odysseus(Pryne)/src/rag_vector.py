@@ -92,10 +92,20 @@ class VectorRAG:
     def healthy(self) -> bool:
         return self._healthy and self._collection is not None
 
-    @property
-    def collection(self):
-        """Expose the ChromaDB collection for direct access by personal_routes etc."""
-        return self._collection
+    def exists_by_hash(self, content_hash: str) -> bool:
+        """Check if a document exists by SHA-256 hash."""
+        if not self.healthy:
+            return False
+        try:
+            # Look for docs with this hash in metadata
+            matches = self._collection.get(
+                where={"content_hash": content_hash},
+                include=["ids"]
+            )
+            return bool(matches and matches.get("ids"))
+        except Exception as e:
+            logger.error(f"exists_by_hash failed: {e}")
+            return False
 
     # ------------------------------------------------------------------
     # Document operations
@@ -207,7 +217,7 @@ class VectorRAG:
     # Search — hybrid: vector similarity + keyword overlap
     # ------------------------------------------------------------------
 
-    def search(self, query: str, k: int = 5, owner: Optional[str] = None) -> List[Dict[str, Any]]:
+    def search(self, query: str, k: int = 5, owner: Optional[str] = None, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
         if not self.healthy:
             return []
         if not query or not isinstance(query, str):
@@ -217,21 +227,24 @@ class VectorRAG:
 
         try:
             from core.constants import RERANK_TOP_N
+            from src.rag_vector import VECTOR_WEIGHT, KEYWORD_WEIGHT
 
             # Stage 1: Vector + Keyword Hybrid Search
             # If reranking is enabled, we over-fetch candidates
             fetch_k = RERANK_TOP_N if self._reranker else k * 3
             fetch_k = min(fetch_k, self._collection.count())
-            
+
+            # Use ChromaDB where filter for owner and namespace if specified
+            where_filter = {}
             if owner:
-                # Extra padding for owner filter if we don't use strict 'where'
-                # (but we DO use strict where below, so this is safety)
-                fetch_k = min(fetch_k * 2, self._collection.count())
+                where_filter["owner"] = owner
+            if namespace:
+                where_filter["namespace"] = namespace
+
+            if not where_filter:
+                where_filter = None
 
             query_embeddings = self._embed([query])
-
-            # Use ChromaDB where filter for owner if specified
-            where_filter = {"owner": owner} if owner else None
 
             results = self._collection.query(
                 query_embeddings=query_embeddings,
@@ -242,7 +255,6 @@ class VectorRAG:
 
             query_words = set(query.lower().split())
             candidates = []
-
             for idx in range(len(results["ids"][0])):
                 doc_id = results["ids"][0][idx]
                 distance = results["distances"][0][idx]

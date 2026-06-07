@@ -33,18 +33,19 @@ class RAGManager:
         self.retrieval_service = RetrievalService()
         logger.info("RAGManager initialized with VectorRAG and RetrievalService")
     
-    def search(self, query: str, k: int = 5, owner: str = None) -> List[Dict[str, Any]]:
+    def search(self, query: str, k: int = 5, owner: Optional[str] = None, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
         """Search for documents - delegates to RetrievalService for high-precision retrieval."""
         import asyncio
         # RAGManager is synchronous; bridge to async RetrievalService
         try:
             loop = asyncio.get_event_loop()
             # Convert Dict to list of dicts with 'document' key for backward compatibility
-            results = loop.run_until_complete(self.retrieval_service.get_grounded_context(query, top_k=k))
+            results = loop.run_until_complete(self.retrieval_service.get_grounded_context(query, top_k=k, namespace=namespace))
             return [{"document": r["content"], "metadata": r["metadata"], "score": r.get("score", 0.0)} for r in results]
         except Exception as e:
             logger.error(f"RetrievalService search failed: {e}. Falling back to VectorRAG.")
-            return self.vector_rag.search(query, k=k, owner=owner)
+            return self.vector_rag.search(query, k=k, owner=owner, namespace=namespace)
+
     
     def retrieve(self, query: str, k: int = 5) -> List[str]:
         """Retrieve relevant chunks - delegates to RetrievalService."""
