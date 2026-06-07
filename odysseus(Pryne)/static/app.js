@@ -44,6 +44,9 @@ import spinnerModule from './js/spinner.js';
 import { initKeyboardShortcuts } from './js/keyboard-shortcuts.js';
 import { initSidebarLayout, syncRailSide } from './js/sidebar-layout.js';
 import { initSectionCollapse, initSectionDrag } from './js/section-management.js';
+import KnowledgeDashboard from './js/knowledgeDashboard.js';
+
+const knowledgeDashboard = new KnowledgeDashboard();
 
 const API_BASE = window.location.origin;
 window.themeModule = themeModule;
