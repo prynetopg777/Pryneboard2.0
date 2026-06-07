@@ -68,6 +68,12 @@ def _process_text_file(path: str) -> str:
             logger.error(f"Failed to read file {path}: {e}")
             return "\n\n[Failed to read attached file]"
 
+    # Ported from Hopper: Handle Discord harvest format specifically
+    if "discord" in filename.lower():
+        # Split by "---" separator used in Hopper harvests
+        messages = [m.strip() for m in content.split("---") if m.strip()]
+        content = "\n\n".join([f"[Discord Message]:\n{msg}" for msg in messages])
+
     try:
         file_size = os.path.getsize(path)
         size_str = f"{file_size:,}"

@@ -73,8 +73,6 @@ graph TD
 ## 6. Technical Debt & Refactor Candidates
 
 ### Overlapping Functionality (Critical)
-- **Document Processing:** Both `odysseus-SIDE-/src/document_processor.py` and `Hopper/.../documentProcessor.ts` do the same job. 
-    - *Action:* Port Hopper's logic to the Python service and decommission the TS version.
 - **RAG Implementation:** Two different retrieval strategies currently exist.
     - *Action:* Standardize on the "Precision Engine" (Two-stage) defined in Phase 1.
 
