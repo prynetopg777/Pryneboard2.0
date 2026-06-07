@@ -431,6 +431,8 @@ class ToolIndex:
         frozenset({"write a", "create a doc", "draft", "compose", "poem", "story",
                    "essay", "outline", "letter"}):
             {"create_document", "edit_document", "update_document"},
+        frozenset({"youtube", "video", "transcript", "comment"}):
+            {"analyze_youtube_video"},
     }
 
     def get_tools_for_query(
