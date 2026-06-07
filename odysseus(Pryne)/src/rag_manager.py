@@ -20,27 +20,46 @@ logger = logging.getLogger(__name__)
 
 class RAGManager:
     """
-    A manager class that wraps VectorRAG for backward compatibility.
-    Most methods delegate directly to VectorRAG.
+    A manager class that wraps VectorRAG for storage/indexing 
+    and RetrievalService for precision retrieval.
     """
     
     def __init__(self, persist_directory: str = "data/chroma"):
-        """Initialize the RAGManager with VectorRAG."""
+        """Initialize the RAGManager with VectorRAG and RetrievalService."""
+        from src.rag_vector import VectorRAG
+        from src.domain.retrieval_service import RetrievalService
+        
         self.vector_rag = VectorRAG(persist_directory=persist_directory)
-        logger.info("RAGManager initialized as wrapper for VectorRAG")
+        self.retrieval_service = RetrievalService()
+        logger.info("RAGManager initialized with VectorRAG and RetrievalService")
     
-    # Delegate all methods to VectorRAG
     def search(self, query: str, k: int = 5, owner: str = None) -> List[Dict[str, Any]]:
-        """Search for documents - delegates to VectorRAG."""
-        return self.vector_rag.search(query, k, owner=owner)
+        """Search for documents - delegates to RetrievalService for high-precision retrieval."""
+        import asyncio
+        # RAGManager is synchronous; bridge to async RetrievalService
+        try:
+            loop = asyncio.get_event_loop()
+            # Convert Dict to list of dicts with 'document' key for backward compatibility
+            results = loop.run_until_complete(self.retrieval_service.get_grounded_context(query, top_k=k))
+            return [{"document": r["content"], "metadata": r["metadata"], "score": r.get("score", 0.0)} for r in results]
+        except Exception as e:
+            logger.error(f"RetrievalService search failed: {e}. Falling back to VectorRAG.")
+            return self.vector_rag.search(query, k=k, owner=owner)
     
+    def retrieve(self, query: str, k: int = 5) -> List[str]:
+        """Retrieve relevant chunks - delegates to RetrievalService."""
+        import asyncio
+        try:
+            loop = asyncio.get_event_loop()
+            results = loop.run_until_complete(self.retrieval_service.get_grounded_context(query, top_k=k))
+            return [r["content"] for r in results]
+        except Exception as e:
+            logger.error(f"RetrievalService retrieve failed: {e}. Falling back to VectorRAG.")
+            return self.vector_rag.retrieve(query, k)
+
     def index_personal_documents(self, directory: str, owner: str = None) -> Dict[str, Any]:
         """Index documents - delegates to VectorRAG."""
         return self.vector_rag.index_personal_documents(directory, owner=owner)
-    
-    def retrieve(self, query: str, k: int = 5) -> List[str]:
-        """Retrieve relevant chunks - delegates to VectorRAG."""
-        return self.vector_rag.retrieve(query, k)
     
     def rebuild_index(self) -> bool:
         """Rebuild index - delegates to VectorRAG."""
