@@ -526,7 +526,9 @@ async def build_chat_context(
 
     # YouTube transcripts
     for transcript in preprocessed.youtube_transcripts:
-        preface.append(untrusted_context_message("youtube transcript", transcript))
+        msg = untrusted_context_message("youtube transcript", transcript)
+        msg["_protected"] = True
+        preface.append(msg)
 
     # Normalize model ID. Prefer cached endpoint models so group chat does not
     # re-hit slow local /models endpoints on every participant turn.

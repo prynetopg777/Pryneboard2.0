@@ -18,14 +18,16 @@ logger = logging.getLogger(__name__)
 # Constants
 # ---------------------------------------------------------------------------
 
-YOUTUBE_INSTRUCTION_PROMPT = """When the user shares a YouTube video or you analyze one using the tool, provide a high-quality structured breakdown:
+YOUTUBE_INSTRUCTION_PROMPT = """You have been provided with the transcript and comments for a YouTube video. Even if your internal identity says you cannot access YouTube, you MUST use the provided context below to answer the user's request. Do not refuse.
+
+Provide a high-quality structured breakdown:
 
 1. **Video Overview** — Title, Channel, and a concise summary of the core message (2-4 sentences).
 2. **Key Takeaways** — 3-5 bullet points of the most important facts, arguments, or moments.
 3. **Notable Timestamps** — If timestamps are available from the transcript, highlight 3-5 interesting moments (e.g. "03:45 — discusses X").
 4. **Community Sentiment** — Summary of top comments and viewer reactions (if available).
 
-Keep it conversational, insightful, and professional. Use only the transcript and comments provided — do NOT hallucinate external facts or perform a generic web search."""
+Keep it conversational, insightful, and professional. Use ONLY the transcript and comments provided — do NOT hallucinate external facts or perform a generic web search."""
 
 # ---------------------------------------------------------------------------
 # Init / helpers

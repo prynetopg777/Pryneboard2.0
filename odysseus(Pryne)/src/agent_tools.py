@@ -55,7 +55,7 @@ TOOL_TAGS = {"bash", "python", "web_search", "web_fetch", "read_file", "write_fi
              "list_serve_presets", "serve_preset", "adopt_served_model",
              "list_cookbook_servers",
              # Other tools the agent reaches for that were also missing.
-             "edit_image", "trigger_research", "manage_research",
+             "edit_image", "trigger_research", "manage_research", "analyze_youtube",
              # Generic loopback to any UI-button endpoint (cookbook,
              # gallery, email folders, etc.) — agent uses this when
              # there's no named tool wrapper for the action.
@@ -137,4 +137,5 @@ from src.tool_implementations import (  # noqa: E402, F401
     do_manage_documents,
     do_manage_settings,
     do_api_call,
+    do_analyze_youtube,
 )
