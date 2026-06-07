@@ -599,6 +599,8 @@ async def do_analyze_youtube(content: str, owner: Optional[str] = None) -> Dict:
         "exit_code": 0
     }
 
+
+async def do_search_chats(query: str, limit: int = 20, owner: str | None = None) -> Dict:
     """Search past chat messages for the calling user's sessions only.
 
     Without an owner filter this used to leak EVERY user's chat history
