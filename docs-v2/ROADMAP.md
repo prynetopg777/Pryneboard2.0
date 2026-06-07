@@ -20,7 +20,9 @@
 - [x] Stream AI responses as HTML with Tailwind styling (Hopper style).
 - [x] Implement specialized document processing (CSV tables, PDF metadata).
 - [x] Add YouTube Analysis tool (Transcripts + Comments via yt-dlp).
-- [ ] Build the "Knowledge Dashboard" for managing namespaces and ingestion logs.
+- [x] Build backend API for Knowledge Dashboard (Source listing + Ingestion).
+- [x] Implement Knowledge Dashboard UI shell (Modal + Sidebar access).
+- [ ] Build the "Knowledge Dashboard" ingestion controls (Add Source form).
 - [ ] Implement "Visual Citations" (thumbnails/links for sources).
 
 ## Phase 4: Ecosystem (Advanced Automation)

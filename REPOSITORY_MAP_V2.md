@@ -49,6 +49,10 @@ graph TD
 - `email_server.py`: IMAP/SMTP integration.
 - `memory_server.py`: Semantic memory management.
 
+### Frontend (`odysseus-SIDE-/static/js/`)
+- `knowledgeDashboard.js`: Knowledgebase UI management.
+- `app.js`: Main UI orchestrator.
+
 ---
 
 ## 4. Entry Points
