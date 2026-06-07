@@ -61,17 +61,43 @@ async def list_tools() -> list[Tool]:
                 },
                 "required": ["action"],
             },
+        ),
+        Tool(
+            name="precise_rag_search",
+            description="Perform high-precision search using two-stage retrieval (Vector + Rerank). Use this for detailed, grounded answers.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "The search query"},
+                    "top_k": {"type": "integer", "description": "Number of results (default: 5)"},
+                },
+                "required": ["query"],
+            },
         )
     ]
 
-
 @server.call_tool()
 async def call_tool(name: str, arguments: dict) -> list[TextContent]:
-    if name != "manage_rag":
-        return [TextContent(type="text", text=f"Unknown tool: {name}")]
+    if name == "precise_rag_search":
+        from src.domain.retrieval_service import RetrievalService
+        query = arguments.get("query", "").strip()
+        top_k = arguments.get("top_k", 5)
 
-    _ensure_init()
-    action = arguments.get("action", "")
+        if not query:
+            return [TextContent(type="text", text="Error: Query is required.")]
+
+        engine = RetrievalService()
+        results = await engine.get_grounded_context(query, top_k=top_k)
+
+        formatted_results = "\n\n".join([f"Score: {r['score']}\nContent: {r['content']}" for r in results])
+        return [TextContent(type="text", text=f"High-precision search results:\n\n{formatted_results}")]
+
+    elif name == "manage_rag":
+        # ... (rest of the manage_rag implementation)
+        _ensure_init()
+        action = arguments.get("action", "")
+        # ... (keep the original manage_rag logic)
+
 
     if action == "list":
         if not _personal_docs_manager:

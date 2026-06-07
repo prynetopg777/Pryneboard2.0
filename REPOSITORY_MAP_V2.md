@@ -32,12 +32,15 @@ graph TD
 - `middleware.py`: Security and logging layers.
 
 ### Business Logic (`odysseus-SIDE-/src/`)
+- `app/`: FastAPI routes and application lifecycle.
+- `core/`: Domain models and shared interfaces (`models.py`).
+- `domain/`: Business logic, tool dispatching, and agent orchestration.
+  - `retrieval_service.py`: High-precision two-stage RAG service.
+- `infra/`: Adapters for external services.
+  - `vector_db.py`: ChromaDB storage adapter.
+  - `reranker.py`: Cross-encoder/API reranker adapter.
 - `ai_interaction.py`: Core chat and LLM interfacing (Strict Grounding Rules).
 - `agent_loop.py`: Task management and tool execution.
-- `document_processor.py`: File parsing (CSV Tables, PDF Metadata).
-- `rag_vector.py`: ChromaDB storage and retrieval.
-- `deep_research.py`: High-level reporting logic.
-- `tool_implementations.py`: Native tool logic (YouTube Analysis).
 
 ### MCP Servers (`odysseus-SIDE-/mcp_servers/`)
 - `rag_server.py`: RAG document management.
