@@ -5,7 +5,7 @@ A thin wrapper around VectorRAG for backward compatibility and additional featur
 """
 
 import logging
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 # Try to import from different possible locations
 try:
