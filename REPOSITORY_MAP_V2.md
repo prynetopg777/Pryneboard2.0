@@ -36,6 +36,7 @@ graph TD
 - `core/`: Domain models and shared interfaces (`models.py`).
 - `domain/`: Business logic, tool dispatching, and agent orchestration.
   - `retrieval_service.py`: High-precision two-stage RAG service.
+  - `ingestion_service.py`: Unified ingestion and deduplication service.
 - `infra/`: Adapters for external services.
   - `vector_db.py`: ChromaDB storage adapter.
   - `reranker.py`: Cross-encoder/API reranker adapter.
