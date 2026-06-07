@@ -5,7 +5,7 @@ from typing import Dict, Any, Optional
 from src.document_processor import calculate_content_hash, _process_text_file
 from src.markitdown_runtime import convert_to_markdown
 from services.youtube.youtube_handler import is_youtube_url, extract_youtube_id, extract_transcript_async
-from src.rag_manager import get_rag_manager
+from src.rag_singleton import get_rag_manager
 
 logger = logging.getLogger(__name__)
 

@@ -22,6 +22,7 @@ from src.chat_handler import ChatHandler
 from src.research_handler import ResearchHandler
 from src.upload_handler import UploadHandler
 from src.search import update_search_config
+from src.domain.ingestion_service import UnifiedIngestionService
 
 logger = logging.getLogger(__name__)
 
@@ -81,6 +82,7 @@ def initialize_managers(base_dir: str, rag_manager=None) -> Dict[str, Any]:
     # Initialize processors
     chat_processor = ChatProcessor(memory_manager, personal_docs_manager, memory_vector=memory_vector, skills_manager=skills_manager)
     research_handler = ResearchHandler()
+    ingestion_service = UnifiedIngestionService()
     
     # Initialize chat handler with all dependencies
     chat_handler = ChatHandler(
@@ -115,6 +117,7 @@ def initialize_managers(base_dir: str, rag_manager=None) -> Dict[str, Any]:
         "research_handler": research_handler,
         "chat_handler": chat_handler,
         "model_discovery": model_discovery,
+        "ingestion_service": ingestion_service,
         "current_presets": preset_manager.presets,
         "PERSONAL_INDEX": personal_docs_manager.index
     }
