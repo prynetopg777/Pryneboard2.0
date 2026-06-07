@@ -31,7 +31,7 @@ export default class KnowledgeDashboard {
     }
 
     renderSources(sources) {
-        if (!sources.length) {
+        if (!sources || !sources.length) {
             this.body.innerHTML = '<p>No sources indexed yet.</p>';
             return;
         }
