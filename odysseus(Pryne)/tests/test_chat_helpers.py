@@ -1,5 +1,5 @@
 import pytest
-from routes.chat_helpers import clean_thinking_for_save, needs_auto_name
+from src.app.chat_helpers import clean_thinking_for_save, needs_auto_name
 
 
 @pytest.mark.parametrize("name,expected", [

@@ -29,11 +29,11 @@ if "core.database" not in sys.modules:
         setattr(_core_db, _name, MagicMock())
     sys.modules["core.database"] = _core_db
 
-import routes.model_routes as model_routes
+import src.app.model_routes as model_routes
 import src.database as src_database
 import src.endpoint_resolver as endpoint_resolver
 import src.llm_core as llm_core
-from routes.model_routes import (
+from src.app.model_routes import (
     _match_provider_curated,
     _curate_models,
     _visible_models,
@@ -645,7 +645,7 @@ class _PinnedFakeRequest:
 
 
 def _get_route(path, method):
-    from routes.model_routes import setup_model_routes
+    from src.app.model_routes import setup_model_routes
     router = setup_model_routes(model_discovery=None)
     for route in router.routes:
         if getattr(route, "path", "") == path and method in getattr(route, "methods", set()):

@@ -5,7 +5,7 @@ import sys
 import pytest
 from fastapi import HTTPException
 
-from routes.cookbook_helpers import (
+from src.app.cookbook_helpers import (
     _cached_model_scan_script,
     _append_llama_cpp_linux_accel_build_lines,
     _append_serve_exit_code_lines,
@@ -529,7 +529,7 @@ def test_cached_model_scan_reports_plain_dir_gguf(tmp_path):
 # ── #1219 / #1459: keep big dependency wheel builds off the home pip cache ──
 
 def test_pip_install_no_cache_injects_flag():
-    from routes.cookbook_helpers import _pip_install_no_cache
+    from src.app.cookbook_helpers import _pip_install_no_cache
     assert _pip_install_no_cache("python -m pip install vllm") == \
         "python -m pip install --no-cache-dir vllm"
     assert _pip_install_no_cache("pip install -q huggingface-hub") == \
@@ -537,7 +537,7 @@ def test_pip_install_no_cache_injects_flag():
 
 
 def test_pip_install_no_cache_is_idempotent_and_scoped():
-    from routes.cookbook_helpers import _pip_install_no_cache
+    from src.app.cookbook_helpers import _pip_install_no_cache
     # already present -> unchanged
     already = "pip install --no-cache-dir vllm"
     assert _pip_install_no_cache(already) == already

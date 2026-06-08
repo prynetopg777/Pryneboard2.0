@@ -38,7 +38,7 @@ for _name, _attrs in _STUBS.items():
 from fastapi import HTTPException  # noqa: E402
 
 from src.auth_helpers import effective_user  # noqa: E402
-import routes.session_routes as SR  # noqa: E402
+import src.app.session_routes as SR  # noqa: E402
 
 
 def _req(**state):

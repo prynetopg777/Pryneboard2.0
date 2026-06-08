@@ -83,7 +83,7 @@ def test_password_change_allows_new_password_and_blocks_old_password(tmp_path):
 def _change_password_endpoint(auth_manager):
     sys.modules.pop("routes.auth_routes", None)
     _real_core_package()
-    from routes.auth_routes import ChangePasswordRequest, setup_auth_routes
+    from src.app.auth_routes import ChangePasswordRequest, setup_auth_routes
 
     router = setup_auth_routes(auth_manager)
     for route in router.routes:

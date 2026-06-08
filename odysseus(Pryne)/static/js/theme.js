@@ -29,6 +29,7 @@ export const THEMES = {
                             inputBg: '#2f2f2f' } },
   claude:     { bg:'#262624', fg:'#f5f4f0', panel:'#30302e', border:'#4a4a47', red:'#c6613f' },
   cute:       { bg:'#fff0f5', fg:'#d4608a', panel:'#fff8fa', border:'#f0c0d0', red:'#ff6b9d' },
+  lebron:     { bg:'#310a56', fg:'#fdb927', panel:'#46127a', border:'#fdb927', red:'#fdb927' },
 };
 
 const DEFAULT_THEME = 'dark';
@@ -391,7 +392,7 @@ const _BG_CLASSES = ['bg-pattern-dots',
   'bg-pattern-petals', 'bg-pattern-sparkles', 'bg-pattern-embers'];
 const _CANVAS_PATTERNS = { synapse: _initSynapse, rain: _initRain, constellations: _initConstellations,
   'perlin-flow': _initPerlinFlow,
-  petals: _initPetals, sparkles: _initSparkles, embers: _initEmbers };
+  petals: _initPetals, sparkles: _initSparkles, embers: _initEmbers, lebron: _initLebron };
 
 export function applyBgEffectColor(color) {
   document.documentElement.style.setProperty('--bg-effect-color', color || '');
@@ -429,9 +430,14 @@ export function applyBgPattern(pattern) {
   const p = pattern || 'none';
   document.body.classList.remove(..._BG_CLASSES);
   // Clean up any canvas backgrounds
-  document.querySelectorAll('#synapse-canvas, #rain-canvas, #constellations-canvas, #perlin-flow-canvas, #petals-canvas, #sparkles-canvas, #embers-canvas').forEach(c => c.remove());
+  document.querySelectorAll('#synapse-canvas, #rain-canvas, #constellations-canvas, #perlin-flow-canvas, #petals-canvas, #sparkles-canvas, #embers-canvas, #lebron-bg').forEach(c => c.remove());
   if (p !== 'none') document.body.classList.add('bg-pattern-' + p);
-  if (_CANVAS_PATTERNS[p]) _CANVAS_PATTERNS[p]();
+  
+  if (p === 'lebron') {
+    _initLebron();
+  } else if (_CANVAS_PATTERNS[p]) {
+    _CANVAS_PATTERNS[p]();
+  }
   // Hide sliders that do nothing on static patterns.
   const hide = _STATIC_PATTERNS.has(p);
   const ig = document.getElementById('theme-bg-intensity-group');
@@ -2040,6 +2046,19 @@ function _initEmbers() {
     ctx.globalCompositeOperation = 'source-over';
   }
   draw();
+}
+
+// ── LeBron background — animated LeBron background ──
+function _initLebron() {
+  if (document.getElementById('lebron-bg')) return;
+  const bg = document.createElement('div');
+  bg.id = 'lebron-bg';
+  // Use local URL for the LeBron GIF.
+  // Ensure non-interactive and low opacity for readability.
+  // Use z-index: -1 so it stays behind all application content.
+  bg.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0.1;background-color:transparent !important;background-image:url("/static/lebron_bg.gif");background-size:cover;background-position:center;background-repeat:no-repeat;';
+  bg.setAttribute('aria-hidden', 'true');
+  document.documentElement.prepend(bg);
 }
 
 const themeModule = { initThemeUI, togglePopup, closePopup, makeDraggable,

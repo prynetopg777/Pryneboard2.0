@@ -42,7 +42,7 @@ if "core.platform_compat" not in sys.modules:
     _pc.which_tool = MagicMock(return_value="bw")
     sys.modules["core.platform_compat"] = _pc
 
-import routes.vault_routes as vr  # noqa: E402
+import src.app.vault_routes as vr  # noqa: E402
 
 
 class _FakeProc:

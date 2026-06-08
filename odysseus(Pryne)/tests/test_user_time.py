@@ -82,7 +82,7 @@ def test_agent_system_prompt_includes_shared_current_time(monkeypatch):
 
 
 def test_calendar_relative_time_parser_handles_dotted_pm(monkeypatch):
-    import routes.calendar_routes as calendar_routes
+    import src.app.calendar_routes as calendar_routes
 
     class FixedDateTime(datetime):
         @classmethod

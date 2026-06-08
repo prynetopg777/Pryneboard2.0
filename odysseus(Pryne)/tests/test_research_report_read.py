@@ -19,7 +19,7 @@ from pathlib import Path
 import pytest
 
 from src.tool_implementations import do_manage_research
-from src.agent_loop import TOOL_SECTIONS
+from src.agents.agent_loop import TOOL_SECTIONS
 
 _DATA_DIR = Path("data/deep_research")
 

@@ -22,7 +22,7 @@ from src.chat_handler import ChatHandler
 from src.research_handler import ResearchHandler
 from src.upload_handler import UploadHandler
 from src.search import update_search_config
-from src.domain.ingestion_service import UnifiedIngestionService
+from src.ingestion.ingestion_service import UnifiedIngestionService
 
 logger = logging.getLogger(__name__)
 

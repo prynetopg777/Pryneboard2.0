@@ -40,7 +40,7 @@ try:
     if isinstance(sys.modules.get("core.session_manager"), MagicMock):
         del sys.modules["core.session_manager"]
     importlib.import_module("core.session_manager")
-    import routes.session_routes as SR  # noqa: E402
+    import src.app.session_routes as SR  # noqa: E402
 finally:
     for _name, _val in _saved.items():
         if _val is _ABSENT:

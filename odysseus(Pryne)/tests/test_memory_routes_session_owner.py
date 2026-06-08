@@ -13,7 +13,7 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi import HTTPException
 
-import routes.memory_routes as mr
+import src.app.memory_routes as mr
 
 
 def _route(router, path, method):

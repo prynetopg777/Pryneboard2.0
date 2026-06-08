@@ -36,7 +36,7 @@ def _route(router, path, method="GET"):
 
 @pytest.fixture
 def archived_endpoint(monkeypatch):
-    import routes.session_routes as sr
+    import src.app.session_routes as sr
     from unittest.mock import MagicMock
 
     monkeypatch.setattr(sr, "SessionLocal", _TS)

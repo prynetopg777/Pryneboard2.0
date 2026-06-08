@@ -43,7 +43,7 @@ from unittest.mock import MagicMock
 
 # Point every data-dir-using dependency (core.database, secret_storage,
 # routes.email_helpers, ...) at a per-process tmp dir BEFORE any
-# `from routes...` import runs. Without this the SQLAlchemy engine
+# `from src.app...` import runs. Without this the SQLAlchemy engine
 # created at module-import time would try to open `./data/app.db`,
 # which doesn't exist on bare CI machines, and our test would fail
 # with `OperationalError: unable to open database file` long before
@@ -64,7 +64,7 @@ async def test_auto_summarize_pass_logs_out_imap_on_select_failure(monkeypatch):
     post-connect path is the first un-guarded IMAP call, so forcing
     it to raise lands us in the outer `except` cleanly without any
     of the inner try/except scans swallowing the error first."""
-    import routes.email_pollers as email_pollers
+    import src.app.email_pollers as email_pollers
 
     captured = {}
 

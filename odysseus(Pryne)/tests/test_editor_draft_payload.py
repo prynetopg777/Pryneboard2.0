@@ -10,7 +10,7 @@ def _load_module(monkeypatch):
     monkeypatch.setitem(sys.modules, "core.database", db_stub)
     monkeypatch.delitem(sys.modules, "routes.editor_draft_routes", raising=False)
 
-    import routes.editor_draft_routes as mod
+    import src.app.editor_draft_routes as mod
 
     return mod
 

@@ -17,7 +17,7 @@ from sqlalchemy.pool import NullPool
 
 import core.database as cdb
 from core.database import GalleryImage
-from routes.gallery_helpers import _owner_filter
+from src.app.gallery_helpers import _owner_filter
 
 _TMPDB = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
 _ENGINE = create_engine(f"sqlite:///{_TMPDB.name}", connect_args={"check_same_thread": False}, poolclass=NullPool)

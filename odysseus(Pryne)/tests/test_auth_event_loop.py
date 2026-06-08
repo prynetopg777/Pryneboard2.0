@@ -73,7 +73,7 @@ def _event_loop_stubs(monkeypatch):
     monkeypatch.setitem(sys.modules, "core.auth", auth)
 
 
-from routes.auth_routes import setup_auth_routes, LoginRequest
+from src.app.auth_routes import setup_auth_routes, LoginRequest
 
 
 def _login_endpoint(auth_manager):

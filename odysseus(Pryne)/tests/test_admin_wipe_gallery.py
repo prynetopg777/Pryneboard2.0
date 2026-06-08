@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from core.database import Base, GalleryImage, GalleryAlbum
-from routes.admin_wipe_routes import setup_admin_wipe_routes
+from src.app.admin_wipe_routes import setup_admin_wipe_routes
 from fastapi import Request
 
 def test_wipe_gallery_clears_albums(monkeypatch):
@@ -26,7 +26,7 @@ def test_wipe_gallery_clears_albums(monkeypatch):
     db.close()
     
     # 4. Patch SessionLocal in routes/admin_wipe_routes.py to use our in-memory DB
-    import routes.admin_wipe_routes
+    import src.app.admin_wipe_routes
     monkeypatch.setattr(routes.admin_wipe_routes, "SessionLocal", TestSessionLocal)
     
     # Mock require_admin to bypass auth check (using standard pytest monkeypatch)

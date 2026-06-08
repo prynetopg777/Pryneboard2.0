@@ -42,9 +42,9 @@ if "core.database" not in sys.modules:
         setattr(_core_db, _name, MagicMock())
     sys.modules["core.database"] = _core_db
 
-import routes.model_routes as model_routes
+import src.app.model_routes as model_routes
 import src.endpoint_resolver as endpoint_resolver
-from routes.model_routes import (
+from src.app.model_routes import (
     _probe_endpoint,
     _ping_endpoint,
     _probe_single_model,

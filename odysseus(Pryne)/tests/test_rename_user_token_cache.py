@@ -24,7 +24,7 @@ def _route(router, name):
 
 @pytest.fixture
 def rename_endpoint(monkeypatch):
-    import routes.auth_routes as ar
+    import src.app.auth_routes as ar
     import core.database as cdb
 
     # Neutralize the DB owner-rename loop (no real DB needed for this test).

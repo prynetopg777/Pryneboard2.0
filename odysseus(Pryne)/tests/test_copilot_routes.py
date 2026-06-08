@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from core.database import Base, ModelEndpoint
-import routes.copilot_routes as cr
+import src.app.copilot_routes as cr
 
 
 def _mem_db(monkeypatch):

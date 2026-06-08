@@ -2,49 +2,49 @@
 // Odysseus UI — Main Application Orchestrator
 // ES6 module — entry point, no exports (wires all modules together)
 // ============================================
-import Storage from './js/storage.js';
-import uiModule from './js/ui.js';
-import fileHandlerModule from './js/fileHandler.js';
-import modelsModule from './js/models.js';
-import ragModule from './js/rag.js';
-import presetsModule from './js/presets.js';
-import searchModule from './js/search.js';
-import chatModule from './js/chat.js';
-import compareModule from './js/compare/index.js';
-import documentModule from './js/document.js';
-import searchChatModule from './js/search-chat.js';
-import { makeWindowDraggable } from './js/windowDrag.js';
-import markdownModule from './js/markdown.js';
-import chatRenderer from './js/chatRenderer.js';
-import sessionModule from './js/sessions.js';
-import memoryModule from './js/memory.js';
-import voiceRecorderModule from './js/voiceRecorder.js';
-import censorModule from './js/censor.js';
-import galleryModule from './js/gallery.js';
-import tasksModule from './js/tasks.js';
-import calendarModule from './js/calendar.js';
-import notesModule from './js/notes.js';
-import adminModule from './js/admin.js';
-import settingsModule from './js/settings.js';
+import Storage from './storage.js';
+import uiModule from './ui.js';
+import fileHandlerModule from './fileHandler.js';
+import modelsModule from './models.js';
+import ragModule from './rag.js';
+import presetsModule from './presets.js';
+import searchModule from './search.js';
+import chatModule from './chat.js';
+import compareModule from './compare/index.js';
+import documentModule from './document.js';
+import searchChatModule from './search-chat.js';
+import { makeWindowDraggable } from './windowDrag.js';
+import markdownModule from './markdown.js';
+import chatRenderer from './chatRenderer.js';
+import sessionModule from './sessions.js';
+import memoryModule from './memory.js';
+import voiceRecorderModule from './voiceRecorder.js';
+import censorModule from './censor.js';
+import galleryModule from './gallery.js';
+import tasksModule from './tasks.js';
+import calendarModule from './calendar.js';
+import notesModule from './notes.js';
+import adminModule from './admin.js';
+import settingsModule from './settings.js';
 // Eagerly bind unified minimize/restore behavior across all tool modals.
-import './js/modalManager.js';
+import './modalManager.js';
 // Desktop window tiling — drag a modal near an edge/corner to snap.
-import './js/tileManager.js';
-import themeModule from './js/theme.js';
+import './tileManager.js';
+import themeModule from './theme.js';
 // IMPORTANT: import cookbook.js with NO ?v= query — the same plain specifier
 // every other importer (cookbook-hwfit.js / cookbook-diagnosis.js) uses. A query
 // mismatch makes the browser load cookbook.js twice as separate modules (two
 // _envState objects), which broke server selection. Keep all cookbook imports
 // unversioned so this can't recur.
-import cookbookModule from './js/cookbook.js';
-import groupModule from './js/group.js';
-import * as researchPanelModule from './js/research/panel.js';
-import ttsModule from './js/tts-ai.js';
-import spinnerModule from './js/spinner.js';
-import { initKeyboardShortcuts } from './js/keyboard-shortcuts.js';
-import { initSidebarLayout, syncRailSide } from './js/sidebar-layout.js';
-import { initSectionCollapse, initSectionDrag } from './js/section-management.js';
-import KnowledgeDashboard from './js/knowledgeDashboard.js';
+import cookbookModule from './cookbook.js';
+import groupModule from './group.js';
+import * as researchPanelModule from './research/panel.js';
+import ttsModule from './tts-ai.js';
+import spinnerModule from './spinner.js';
+import { initKeyboardShortcuts } from './keyboard-shortcuts.js';
+import { initSidebarLayout, syncRailSide } from './sidebar-layout.js';
+import { initSectionCollapse, initSectionDrag } from './section-management.js';
+import KnowledgeDashboard from './knowledgeDashboard.js';
 
 const knowledgeDashboard = new KnowledgeDashboard();
 
@@ -842,7 +842,7 @@ function initializeEventListeners() {
     toolCookbookBtn.addEventListener('click', async () => {
       if (!cookbookModule) return;
       // Try minimized→restore or open→minimize via the manager first
-      const Modals = await import('./js/modalManager.js');
+      const Modals = await import('./modalManager.js');
       if (!Modals.toggle('cookbook-modal')) {
         // Not registered yet → fresh open
         cookbookModule.open();
@@ -870,7 +870,7 @@ function initializeEventListeners() {
   if (toolGalleryBtn) {
     toolGalleryBtn.addEventListener('click', async () => {
       if (!galleryModule) return;
-      const Modals = await import('./js/modalManager.js');
+      const Modals = await import('./modalManager.js');
       if (!Modals.toggle('gallery-modal')) {
         if (galleryModule.isGalleryOpen()) galleryModule.closeGallery();
         else galleryModule.openGallery();
@@ -899,7 +899,7 @@ function initializeEventListeners() {
   if (toolCalendarBtn) {
     toolCalendarBtn.addEventListener('click', async () => {
       if (!calendarModule) return;
-      const Modals = await import('./js/modalManager.js');
+      const Modals = await import('./modalManager.js');
       // toggle returns true when a registered modal was minimized/restored;
       // returns false when nothing is registered → open fresh.
       if (!Modals.toggle('calendar-modal')) {

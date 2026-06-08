@@ -33,14 +33,14 @@ _TS = sessionmaker(bind=_ENGINE, autoflush=False, autocommit=False)
 @pytest.fixture(autouse=True)
 def _bind_temp_db(monkeypatch):
     monkeypatch.setattr(cdb, "SessionLocal", _TS)
-    import routes.calendar_routes as cr
+    import src.app.calendar_routes as cr
     monkeypatch.setattr(cr, "SessionLocal", _TS, raising=False)
     yield
 
 
 @pytest.fixture
 def tokyo_offset():
-    from routes.calendar_routes import set_user_tz_offset
+    from src.app.calendar_routes import set_user_tz_offset
     set_user_tz_offset(540)  # Tokyo, UTC+9
     try:
         yield

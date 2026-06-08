@@ -27,9 +27,10 @@ MAX_PIPELINE_STEPS = 10
 STRICT_GROUNDING_RULES = (
     "\n\n[GROUNDING RULES]\n"
     "1. Output responses in semantic HTML (e.g., <strong>, <ul>, <p>) with Tailwind classes for formatting.\n"
-    "2. If providing information from a specific source, cite it clearly.\n"
-    "3. Every response MUST end with a 'Sources:' section (even if it says 'No specific sources cited').\n"
-    "4. Be concise and practical. No preamble.\n"
+    "2. If providing information from a specific source, cite it clearly using inline brackets like [Source 1] or [Video Transcript].\n"
+    "3. Every response MUST end with a 'Sources:' section, listing all cited sources with their original metadata (e.g., title, URL, timestamp).\n"
+    "4. If the information is not present in the provided context, you MUST state: 'I cannot find this information in the provided sources.' Do not hallucinate or use external knowledge.\n"
+    "5. Be concise and practical. No preamble.\n"
 )
 
 # ---------------------------------------------------------------------------

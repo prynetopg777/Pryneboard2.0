@@ -24,8 +24,8 @@ mock_modules = {
 
 with patch.dict('sys.modules', mock_modules):
     from src.rag_vector import VectorRAG, _generate_doc_id
-    from src.document_processor import calculate_content_hash
-    from routes.document_routes import setup_document_routes
+    from src.ingestion.document_processor import calculate_content_hash
+    from src.app.document_routes import setup_document_routes
     from core.database import Document
 
 # --- Functional Tests ---
@@ -138,7 +138,7 @@ def test_two_stage_retrieval_rag():
 @pytest.mark.asyncio
 async def test_import_pdf_min_threshold_api():
     """Verify API blocks low-content PDF imports."""
-    from routes.document_routes import setup_document_routes
+    from src.app.document_routes import setup_document_routes
     
     # Mock dependencies for setup_document_routes
     session_manager = MagicMock()
@@ -170,7 +170,7 @@ async def test_import_pdf_min_threshold_api():
 @pytest.mark.asyncio
 async def test_import_pdf_duplicate_detection_api():
     """Verify API detects duplicates via content_hash."""
-    from routes.document_routes import setup_document_routes
+    from src.app.document_routes import setup_document_routes
     
     session_manager = MagicMock()
     upload_handler = MagicMock()

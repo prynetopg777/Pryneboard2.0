@@ -1,5 +1,5 @@
 import logging
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from src.core.models import PryneDocument
 from src.infra.vector_db import ChromaAdapter
 from src.infra.reranker import RerankerAdapter

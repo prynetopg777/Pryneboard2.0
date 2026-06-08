@@ -199,7 +199,7 @@ def test_integrations_plaintext_keys_migrate_on_load(tmp_path, monkeypatch):
 
 def _import_q():
     sys.modules.pop("routes.email_helpers", None)
-    from routes.email_helpers import _q  # noqa: WPS433
+    from src.app.email_helpers import _q  # noqa: WPS433
     return _q
 
 
@@ -325,7 +325,7 @@ def test_upload_resolver_rejects_cross_owner_upload_ids(tmp_path):
 
 
 def test_build_user_content_skips_cross_owner_attachments(tmp_path):
-    from src.document_processor import build_user_content
+    from src.ingestion.document_processor import build_user_content
     from src.upload_handler import UploadHandler
 
     upload_dir, _alice_id, bob_id = _make_upload_store(tmp_path)
@@ -384,7 +384,7 @@ def test_document_upload_lookup_rejects_cross_owner_marker(tmp_path, monkeypatch
 
     sys.modules.pop("routes.document_helpers", None)
     _stub_core_database_for_route_imports(monkeypatch)
-    from routes.document_helpers import _locate_upload
+    from src.app.document_helpers import _locate_upload
 
     upload_dir, _alice_id, bob_id = _make_upload_store(tmp_path)
     handler = UploadHandler(str(tmp_path), str(upload_dir))
@@ -408,7 +408,7 @@ def test_pdf_marker_write_rejects_cross_owner_upload(tmp_path, monkeypatch):
     sys.modules.pop("routes.document_helpers", None)
     _stub_core_database_for_route_imports(monkeypatch)
     from fastapi import HTTPException
-    from routes.document_helpers import _assert_pdf_marker_upload_owned
+    from src.app.document_helpers import _assert_pdf_marker_upload_owned
 
     upload_dir, _alice_id, bob_id = _make_upload_store(tmp_path)
     handler = UploadHandler(str(tmp_path), str(upload_dir))
@@ -504,7 +504,7 @@ def test_inprocess_pollers_gate(monkeypatch):
     on the same SQLite would mark scheduled rows as 'sent' twice."""
     import sys as _sys
     _sys.modules.pop("routes.email_pollers", None)
-    from routes.email_pollers import _inprocess_pollers_enabled  # noqa: WPS433
+    from src.app.email_pollers import _inprocess_pollers_enabled  # noqa: WPS433
 
     # Defaults to enabled (preserves single-process deployments).
     monkeypatch.delenv("ODYSSEUS_INPROCESS_POLLERS", raising=False)
@@ -875,7 +875,7 @@ def test_web_fetch_guard_blocks_redirect_into_private(monkeypatch):
 
 def _import_attachment_extract_dir():
     sys.modules.pop("routes.email_helpers", None)
-    from routes.email_helpers import attachment_extract_dir, ATTACHMENTS_DIR
+    from src.app.email_helpers import attachment_extract_dir, ATTACHMENTS_DIR
     return attachment_extract_dir, ATTACHMENTS_DIR
 
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LeBron Theme Test</title>
+    <style>
+        body { margin: 0; padding: 0; height: 100vh; background-color: #310a56; color: white; font-family: sans-serif; }
+        .content { position: relative; z-index: 1; padding: 50px; }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>LeBron Theme Test</h1>
+        <p>If the theme is working, a LeBron GIF should be visible behind this text.</p>
+    </div>
+    <script>
+        function _initLebron() {
+            const bg = document.createElement('div');
+            bg.id = 'lebron-bg';
+            bg.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0.3;background-image:url("https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZzJ4Z2p4Z2p4Z2p4Z2p4Z2p4Z2p4Z2p4Z2p4Z2p4Z2p4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lTjJp9N3T15D4s/giphy.gif");background-size:cover;background-position:center;background-repeat:no-repeat;';
+            document.body.prepend(bg);
+        }
+        _initLebron();
+    </script>
+</body>
+</html>

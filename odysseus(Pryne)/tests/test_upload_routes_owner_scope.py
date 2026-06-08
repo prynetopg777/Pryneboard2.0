@@ -30,7 +30,7 @@ class _Request:
 
 def _upload_endpoints(upload_handler, monkeypatch):
     import fastapi.dependencies.utils as dependency_utils
-    from routes.upload_routes import router, setup_upload_routes
+    from src.app.upload_routes import router, setup_upload_routes
 
     monkeypatch.setattr(dependency_utils, "ensure_multipart_is_installed", lambda: None)
     before = len(router.routes)

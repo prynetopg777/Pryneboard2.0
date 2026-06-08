@@ -60,7 +60,7 @@ def token_routes_mod(monkeypatch):
     # Force a fresh import so the route module binds to the stubbed core.database
     monkeypatch.delitem(sys.modules, "routes.api_token_routes", raising=False)
 
-    import routes.api_token_routes as mod  # noqa: PLC0415
+    import src.app.api_token_routes as mod  # noqa: PLC0415
     return mod
 
 

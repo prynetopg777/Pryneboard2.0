@@ -10,7 +10,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from routes.shell_routes import (
+from src.app.shell_routes import (
     _find_line_break,
     _running_in_container,
     _docker_row_status,
@@ -56,7 +56,7 @@ def test_shell_routes_import_without_posix_pty_modules(monkeypatch):
 
 async def test_generate_pty_reports_explicit_unsupported_error(monkeypatch):
     """Clients can distinguish unsupported PTY mode from process failures."""
-    import routes.shell_routes as shell_routes
+    import src.app.shell_routes as shell_routes
 
     monkeypatch.setattr(shell_routes, "PTY_SUPPORTED", False)
     monkeypatch.setattr(shell_routes, "_PTY_IMPORT_ERROR", ImportError("No module named 'termios'"))

@@ -13,7 +13,7 @@ def _route_endpoint(router, path: str, method: str):
 
 
 def test_email_tag_clause_excludes_legacy_owner_rows_for_authenticated_owner(monkeypatch):
-    import routes.email_routes as email_routes
+    import src.app.email_routes as email_routes
 
     monkeypatch.setattr(
         email_routes,
@@ -29,7 +29,7 @@ def test_email_tag_clause_excludes_legacy_owner_rows_for_authenticated_owner(mon
 
 
 def test_email_tag_clause_keeps_legacy_rows_for_single_user_mode(monkeypatch):
-    import routes.email_routes as email_routes
+    import src.app.email_routes as email_routes
 
     monkeypatch.setattr(
         email_routes,
@@ -45,8 +45,8 @@ def test_email_tag_clause_keeps_legacy_rows_for_single_user_mode(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_scheduled_email_routes_are_owner_scoped(tmp_path, monkeypatch):
-    import routes.email_helpers as email_helpers
-    import routes.email_routes as email_routes
+    import src.app.email_helpers as email_helpers
+    import src.app.email_routes as email_routes
 
     db_path = tmp_path / "scheduled_emails.db"
     monkeypatch.setattr(email_helpers, "SCHEDULED_DB", db_path)
@@ -87,8 +87,8 @@ async def test_scheduled_email_routes_are_owner_scoped(tmp_path, monkeypatch):
 
 
 def test_scheduled_poller_resolves_config_with_row_owner(tmp_path, monkeypatch):
-    import routes.email_helpers as email_helpers
-    import routes.email_pollers as email_pollers
+    import src.app.email_helpers as email_helpers
+    import src.app.email_pollers as email_pollers
 
     db_path = tmp_path / "scheduled_emails.db"
     monkeypatch.setattr(email_helpers, "SCHEDULED_DB", db_path)

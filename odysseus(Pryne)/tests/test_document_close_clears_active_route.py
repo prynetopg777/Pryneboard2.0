@@ -38,10 +38,10 @@ def _drop_fake_core_database():
 _drop_fake_core_database()
 
 import core.database as cdb
-import routes.document_routes as droutes
+import src.app.document_routes as droutes
 from core.database import Document
 from core.database import Session as DbSession
-from routes.document_helpers import DocumentPatch
+from src.app.document_helpers import DocumentPatch
 from src.tool_implementations import set_active_document, get_active_document
 
 _TMPDB = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
