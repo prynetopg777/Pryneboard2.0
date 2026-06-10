@@ -542,7 +542,7 @@ from routes.skills_routes import setup_skills_routes
 app.include_router(setup_skills_routes(skills_manager))
 
 # Chat
-from routes.chat_routes import setup_chat_routes
+from src.app.chat_routes import setup_chat_routes
 app.include_router(setup_chat_routes(
     session_manager, chat_handler, chat_processor,
     memory_manager, research_handler, upload_handler,
@@ -552,7 +552,7 @@ app.include_router(setup_chat_routes(
 ))
 
 # Research (background deep-research tasks)
-from routes.research_routes import setup_research_routes
+from src.app.research_routes import setup_research_routes
 app.include_router(setup_research_routes(research_handler, session_manager=session_manager))
 
 # History

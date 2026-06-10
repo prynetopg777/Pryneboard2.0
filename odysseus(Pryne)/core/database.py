@@ -30,7 +30,6 @@ class TimestampMixin:
         return Column(DateTime, default=utcnow_naive, onupdate=utcnow_naive, nullable=False)
 
 # Get database URL from environment, default to SQLite
-# Use relative path for better test compatibility
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/app.db")
 
 # Create engine

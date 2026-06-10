@@ -19,9 +19,13 @@ MARKITDOWN_MISSING = (
 )
 
 # Formats routed through markitdown. PDFs stay on pypdf (src/document_processor
-# and src/personal_docs); plain text/code/csv/json/markdown/html stay on the
-# cheaper built-in text path. These are the formats currently dropped entirely.
-MARKITDOWN_EXTS = frozenset({".docx", ".pptx", ".xlsx", ".xls", ".epub"})
+# and src/personal_docs) if markitdown doesn't support them, but we route text,
+# data, and office files through it for consistent normalization.
+MARKITDOWN_EXTS = frozenset({
+    ".docx", ".pptx", ".xlsx", ".xls", ".epub",
+    ".txt", ".md", ".json", ".csv", ".html", ".xml",
+    ".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".c", ".cpp", ".go", ".rs"
+})
 
 
 def is_markitdown_format(path: str) -> bool:

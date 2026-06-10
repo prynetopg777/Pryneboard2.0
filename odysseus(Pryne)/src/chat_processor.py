@@ -255,17 +255,34 @@ class ChatProcessor:
                     relevant = [r for r in results if r.get("similarity", 0) >= self.RAG_SIMILARITY_THRESHOLD]
                     if relevant:
                         logger.info(f"RAG: {len(relevant)}/{len(results)} results above threshold {self.RAG_SIMILARITY_THRESHOLD}")
+                        
+                        import datetime
+                        current_time = datetime.datetime.now().isoformat()
+                        
                         rag_sources = [
                             {
                                 "filename": r["metadata"].get("filename", r["metadata"].get("source", "unknown")),
+                                "source_path": r["metadata"].get("source", "unknown"),
+                                "chunk_id": r["metadata"].get("chunk_id", "unknown"),
                                 "snippet": r["document"][:200],
                                 "similarity": round(r.get("similarity", 0), 3)
                             }
                             for r in relevant
                         ]
-                        rag_content = "Relevant documents:\n\n" + "\n\n---\n\n".join(
-                            f"[{s['filename']}]\n{r['document']}" for s, r in zip(rag_sources, relevant)
-                        )
+                        
+                        rag_blocks = []
+                        for s, r in zip(rag_sources, relevant):
+                            block = (
+                                f"[Source Document: {s['filename']}]\n"
+                                f"File Path: {s['source_path']}\n"
+                                f"Section/Chunk: {s['chunk_id']}\n"
+                                f"Confidence Score: {s['similarity']}\n"
+                                f"Retrieval Time: {current_time}\n"
+                                f"Content:\n{r['document']}"
+                            )
+                            rag_blocks.append(block)
+
+                        rag_content = "Relevant documents:\n\n" + "\n\n---\n\n".join(rag_blocks)
                         if len(rag_content) > 10000:
                             rag_content = rag_content[:10000] + "\n[Truncated]"
                         
@@ -274,8 +291,9 @@ class ChatProcessor:
                             "\n\n[GROUNDING RULES]\n"
                             "1. Use ONLY the provided 'Relevant documents' above to answer the query.\n"
                             "2. If the answer cannot be found in the documents, explicitly state: 'I cannot answer this based on the retrieved documents.'\n"
-                            "3. Do NOT use external knowledge.\n"
-                            "4. Cite sources using [Filename] syntax at the end of every claim.\n"
+                            "3. Do NOT use external knowledge. Never present unverified information as fact.\n"
+                            "4. CITE YOUR SOURCES. For every fact you present, you MUST include provenance information "
+                            "matching the provided metadata: [Source Document: {filename}, File Path: {path}, Section: {chunk}, Confidence: {score}].\n"
                             "5. Output responses in semantic HTML (e.g., <strong>, <ul>, <p>) with Tailwind classes for formatting.\n"
                         )
                         

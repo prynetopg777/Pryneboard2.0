@@ -427,6 +427,12 @@ class VectorRAG:
                             'directory': root,
                             'type': ext,
                         }
+                        
+                        # Test Folder Knowledge Collection
+                        path_parts = Path(root).parts
+                        if any("test" in p.lower() for p in path_parts):
+                            meta["tags"] = "Reference Material, Test Knowledge"
+                        
                         if owner:
                             meta['owner'] = owner
 
